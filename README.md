@@ -4,13 +4,27 @@ Minecraft Realms Map
 An automation tool to allow Minecraft Realms backups to be downloaded and have maps generated from them.
 
 Specifically this is designed to run on a Raspberry Pi to generate maps from your world and upload them to a remote
-FTP server.
+FTP server. To do this the tool reverse engineers the Minecraft authentication and Realms private API calls to download
+the world backups from the Realms Amazon S3 bucket url.
 
 Note: The installer only supports Debian/Ubuntu and OSX at this time.
 
+## Features
+
+*   Nightly backups with 7 days retention
+*   Automatic map generation
+
 ## TODO
 
+*   Add logging backup / map generation to disk
 *   Add encryption to Minecraft username and password stored on disk.
+*   Upload to FTP
+*   Test Linux installer on RaspberryPi
+
+## Compatibility
+
+This tool has been tested and works with Minecraft 1.10. Map generation is optimized for Minecraft 1.9 so there may be
+specific rendering issues until the []Mapcrafter](https://mapcrafter.org/index) team provide an update to fix this.
 
 ## Dependencies
 

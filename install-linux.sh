@@ -6,7 +6,7 @@ MINECRAFT_FOLDER=~/.minecraft
 sudo apt-get update
 sudo apt-get install -y python libpng-dev libjpeg-dev libboost-iostreams-dev \
 libboost-system-dev libboost-filesystem-dev libboost-program-options-dev \
-build-essential cmake jq
+build-essential cmake jq wget
 
 #install mapcrafter
 git clone https://github.com/mapcrafter/mapcrafter.git bin/mapcrafter
@@ -23,4 +23,4 @@ python bin/mapcrafter/src/tools/mapcrafter_textures.py jar/1.9.4.jar bin/mapcraf
 cp render.default render.conf
 
 #create default configuration.conf file
-printf "ftp_server=FTP_SERVER_ADDRESS\nftp_username=FTP_USERNAME\nftp_password=FTP_PASSWORD\nminecraft_username=MINECRAFT_USERNAME\nminecraft_password=MINECRAFT_PASSWORD\nminecraft_profile_id=$MINECRAFT_PROFILE_ID" > configuration.conf
+printf "FTP_SERVER=\nFTP_USERNAME=\nFTP_PASSWORD=\nMINECRAFT_USERNAME=$MINECRAFT_USERNAME\nMINECRAFT_PASSWORD=\nMINECRAFT_PROFILE_ID=$MINECRAFT_PROFILE_ID\nMINECRAFT_CLIENT_ID=$MINECRAFT_CLIENT_ID\nMINECRAFT_VERSION=1.10\nMINECRAFT_WORLD_NUM=1\nHW_THREADS=2" > configuration.conf

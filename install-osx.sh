@@ -34,7 +34,7 @@ echo "Installing dependencies..."
 #$ command -v brew >/dev/null 2>&1 || { /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" }
 
 #install build tools
-#brew install boost libpng cmake libjpeg-turbo jq
+#brew install boost libpng cmake libjpeg-turbo jq wget
 
 #install mapcrafter
 #git clone https://github.com/mapcrafter/mapcrafter.git bin/mapcrafter
@@ -60,6 +60,6 @@ MINECRAFT_USERNAME=$(echo $LAUNCHER_PROFILES | jq -r ".authenticationDatabase.$M
 MINECRAFT_CLIENT_ID=$(uuid)
 
 #create default configuration.conf file
-printf "FTP_SERVER=\nFTP_USERNAME=\nFTP_PASSWORD=\nMINECRAFT_USERNAME=$MINECRAFT_USERNAME\nMINECRAFT_PASSWORD=\nMINECRAFT_PROFILE_ID=$MINECRAFT_PROFILE_ID\nMINECRAFT_CLIENT_ID=$MINECRAFT_CLIENT_ID" > configuration.conf
+printf "FTP_SERVER=\nFTP_USERNAME=\nFTP_PASSWORD=\nMINECRAFT_USERNAME=$MINECRAFT_USERNAME\nMINECRAFT_PASSWORD=\nMINECRAFT_PROFILE_ID=$MINECRAFT_PROFILE_ID\nMINECRAFT_CLIENT_ID=$MINECRAFT_CLIENT_ID\nMINECRAFT_VERSION=1.10\nMINECRAFT_WORLD_NUM=1\nHW_THREADS=4" > configuration.conf
 
 echo "Done!"
