@@ -33,15 +33,15 @@ Note: The installer only supports Debian/Ubuntu and OSX at this time.
     git clone https://github.com/HAZARDU5/minecraft-realms-map.git
     ```
 
-2)  Open Minecraft, login with your account and click *Edit Profile*
+3)  Open Minecraft, login with your account and click *Edit Profile*
 
-3)  Select *Release 1.9.4* and click *Save Profile*
+4)  Select *Release 1.9.4* and click *Save Profile*
 
-4)  Click *Play* to download the Minecraft app and launch Minecraft.
+5)  Click *Play* to download the Minecraft app and launch Minecraft.
 
-5)  Close Minecraft.
+6)  Close Minecraft.
 
-6)  If on OSX open a Terminal and run the following command to copy Minecraft 1.9.4 jar into the `jar` folder:
+7)  If on OSX open a Terminal and run the following command to copy Minecraft 1.9.4 jar into the `jar` folder:
 
     ```
     cp Library/Application\ Support/minecraft/versions/1.9.4/1.9.4.jar ~/minecraft-realms-map/jar
@@ -53,8 +53,8 @@ Note: The installer only supports Debian/Ubuntu and OSX at this time.
     cp ~/.minecraft/versions/1.9.4/1.9.4.jar ~/minecraft-realms-map/jar
     ```
 
-7)  Run the `install.sh` script that matches your OS.
+8)  Run the `install.sh` script that matches your OS.
 
-8)  Edit the generated `render.conf` and `ftp.conf` files to suit your environment. Details on editing `render.conf` are
-    []available here](https://docs.mapcrafter.org/builds/stable/configuration.html).
+9)  Edit the generated `render.conf` and `ftp.conf` files to suit your environment. Details on editing `render.conf` are
+    [available here](https://docs.mapcrafter.org/builds/stable/configuration.html).
 

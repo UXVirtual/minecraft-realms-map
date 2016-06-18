@@ -1,0 +1,8 @@
+output_dir = output
+
+[world:myworld]
+input_dir = world
+
+[map:map_myworld]
+name = "My World"
+world = myworld
