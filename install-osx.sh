@@ -2,31 +2,64 @@
 
 MINECRAFT_FOLDER=~/Library/Application\ Support/minecraft
 
+uuid()
+{
+    local N B C='89ab'
+
+    for (( N=0; N < 16; ++N ))
+    do
+        B=$(( $RANDOM%256 ))
+
+        case $N in
+            6)
+                printf '4%x' $(( B%16 ))
+                ;;
+            8)
+                printf '%c%x' ${C:$RANDOM%${#C}:1} $(( B%16 ))
+                ;;
+            3 | 5 | 7 | 9)
+                printf '%02x-' $B
+                ;;
+            *)
+                printf '%02x' $B
+                ;;
+        esac
+    done
+
+    echo
+}
+
+echo "Installing dependencies..."
 #install homebrew if missing
-$ command -v brew >/dev/null 2>&1 || { /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" }
+#$ command -v brew >/dev/null 2>&1 || { /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" }
 
 #install build tools
-brew install boost libpng cmake libjpeg-turbo jq
+#brew install boost libpng cmake libjpeg-turbo jq
 
 #install mapcrafter
-git clone https://github.com/mapcrafter/mapcrafter.git bin/mapcrafter
-cd bin/mapcrafter
-cmake . -DJPEG_INCLUDE_DIR=/usr/local/opt/jpeg-turbo/include/ -DJPEG_LIBRARY=/usr/local/opt/jpeg-turbo/lib/libjpeg.dylib
-make
-cd ../../
+#git clone https://github.com/mapcrafter/mapcrafter.git bin/mapcrafter
+#cd bin/mapcrafter
+#cmake . -DJPEG_INCLUDE_DIR=/usr/local/opt/jpeg-turbo/include/ -DJPEG_LIBRARY=/usr/local/opt/jpeg-turbo/lib/libjpeg.dylib
+#make
+#cd ../../
 
 #install minecraft textures
-cp "$MINECRAFT_FOLDER/versions/1.9.4/1.9.4.jar" jar
-python bin/mapcrafter/src/tools/mapcrafter_textures.py jar/1.9.4.jar bin/mapcrafter/src/data/textures
+#cp "$MINECRAFT_FOLDER/versions/1.9.4/1.9.4.jar" jar
+#python bin/mapcrafter/src/tools/mapcrafter_textures.py jar/1.9.4.jar bin/mapcrafter/src/data/textures
 
 #create render.conf file
+echo "Creating render.conf..."
 cp render.default render.conf
 
+echo "Creating configuration.conf..."
+
 #get minecraft profile ID
-MINECRAFT_PROFILE_ID=$(cat "$MINECRAFT_FOLDER"/launcher_profiles.json | jq -r '.selectedUser')
+LAUNCHER_PROFILES=$(cat "$MINECRAFT_FOLDER"/launcher_profiles.json)
+MINECRAFT_PROFILE_ID=$(echo $LAUNCHER_PROFILES | jq -r '.selectedUser')
+MINECRAFT_USERNAME=$(echo $LAUNCHER_PROFILES | jq -r ".authenticationDatabase.$MINECRAFT_PROFILE_ID.username")
+MINECRAFT_CLIENT_ID=$(uuid)
 
 #create default configuration.conf file
-printf "ftp_server=FTP_SERVER_ADDRESS\nftp_username=FTP_USERNAME\nftp_password=FTP_PASSWORD\nminecraft_username=MINECRAFT_USERNAME\nminecraft_password=MINECRAFT_PASSWORD\nminecraft_profile_id=$MINECRAFT_PROFILE_ID" > configuration.conf
+printf "FTP_SERVER=\nFTP_USERNAME=\nFTP_PASSWORD=\nMINECRAFT_USERNAME=$MINECRAFT_USERNAME\nMINECRAFT_PASSWORD=\nMINECRAFT_PROFILE_ID=$MINECRAFT_PROFILE_ID\nMINECRAFT_CLIENT_ID=$MINECRAFT_CLIENT_ID" > configuration.conf
 
-
-
+echo "Done!"
