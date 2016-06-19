@@ -64,4 +64,8 @@ find ./backups/*.tar.gz -mtime +7 -type f -delete
 echo "Generating map..."
 bin/mapcrafter/src/mapcrafter -c render.conf -j "$HW_THREADS"
 
+echo "Uploading map to web server..."
+#TODO: change to use configuration.conf to specify username and password info
+ncftpput -R -u "$FTP_USERNAME" -p "$FTP_PASSWORD" "$FTP_SERVER" "$FTP_PATH" ./output
+
 echo "DONE!"
