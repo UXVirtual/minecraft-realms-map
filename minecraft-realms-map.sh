@@ -65,7 +65,14 @@ echo "Generating map..."
 bin/mapcrafter/src/mapcrafter -c render.conf -j "$HW_THREADS"
 
 echo "Uploading map to web server..."
+
+DATE=`date +%Y-%m-%d:%H:%M:%S`
+echo "Started transfer at $DATE"
+
 #TODO: change to use configuration.conf to specify username and password info
 ncftpput -R -u "$FTP_USERNAME" -p "$FTP_PASSWORD" "$FTP_SERVER" "$FTP_PATH" ./output
+
+DATE=`date +%Y-%m-%d:%H:%M:%S`
+echo "Finished transfer at $DATE"
 
 echo "DONE!"
