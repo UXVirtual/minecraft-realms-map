@@ -62,15 +62,49 @@ echo "Removing backups older than 7 days..."
 find ./backups/*.tar.gz -mtime +7 -type f -delete
 
 echo "Generating map..."
+
+DATE=`date +%Y-%m-%d:%H:%M:%S`
+echo "Started map generation at $DATE"
+
 bin/mapcrafter/src/mapcrafter -c render.conf -j "$HW_THREADS"
 
+DATE=`date +%Y-%m-%d:%H:%M:%S`
+echo "Finished map generation at $DATE"
+
 echo "Uploading map to web server..."
+
+s3_sync
+{
+    echo "Running S3 sync..."
+    s3cmd sync --delete-removed ./output/* $S3_URL #$S3_URL must include trailing slash!
+    echo "S3 sync completed!"
+}
+
+#TODO: change to use configuration.conf to specify username and password info
+ftp_sync
+{
+    echo "Running FTP sync..."
+    ncftpput -R -u "$FTP_USERNAME" -p "$FTP_PASSWORD" "$FTP_SERVER" "$FTP_PATH" ./output
+    echo "FTP sync completed!"
+}
 
 DATE=`date +%Y-%m-%d:%H:%M:%S`
 echo "Started transfer at $DATE"
 
-#TODO: change to use configuration.conf to specify username and password info
-ncftpput -R -u "$FTP_USERNAME" -p "$FTP_PASSWORD" "$FTP_SERVER" "$FTP_PATH" ./output
+case "$UPLOAD_TYPE" in
+        s3)
+            s3_sync
+            ;;
+
+        ftp)
+            ftp_sync
+            ;;
+
+        *)
+            ftp_sync
+            exit 1
+
+esac
 
 DATE=`date +%Y-%m-%d:%H:%M:%S`
 echo "Finished transfer at $DATE"
