@@ -6,7 +6,7 @@ MINECRAFT_FOLDER=~/.minecraft
 sudo apt-get update
 sudo apt-get install -y python libpng-dev libjpeg-dev libboost-iostreams-dev \
 libboost-system-dev libboost-filesystem-dev libboost-program-options-dev \
-build-essential cmake jq wget ncftp
+build-essential cmake jq wget ncftp s3cmd
 
 #install mapcrafter
 git clone https://github.com/mapcrafter/mapcrafter.git bin/mapcrafter

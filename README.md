@@ -18,7 +18,7 @@ Note: The installer only supports Debian/Ubuntu and OSX at this time.
 
 *   Add logging backup / map generation to disk
 *   Add encryption to Minecraft username and password stored on disk.
-*   Upload to FTP
+*   Upload to S3
 *   Test Linux installer on RaspberryPi
 
 ## Compatibility
@@ -78,6 +78,16 @@ specific rendering issues until the []Mapcrafter](https://mapcrafter.org/index) 
 
     Be sure to enter the Mojang account credentials for your Minecraft Realms account. Legacy Minecraft accounts that
     haven't been migrated will not be useable!
+
+10) If you're using an AWS S3 bucket to upload the map, run the below to configure your connection to S3:
+
+    ```
+    s3cmd --configure
+    ```
+
+    You will be asked for the two keys - copy and paste them from your confirmation email or from your Amazon account
+    page. Be careful when copying them! They are case sensitive and must be entered accurately or you'll keep getting
+    errors about invalid signatures or similar.
 
 ## Disclaimer
 
