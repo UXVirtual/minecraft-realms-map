@@ -73,16 +73,14 @@ echo "Finished map generation at $DATE"
 
 echo "Uploading map to web server..."
 
-s3_sync
-{
+function s3_sync {
     echo "Running S3 sync..."
     s3cmd sync --delete-removed ./output/* $S3_URL #$S3_URL must include trailing slash!
     echo "S3 sync completed!"
 }
 
 #TODO: change to use configuration.conf to specify username and password info
-ftp_sync
-{
+function ftp_sync {
     echo "Running FTP sync..."
     ncftpput -R -u "$FTP_USERNAME" -p "$FTP_PASSWORD" "$FTP_SERVER" "$FTP_PATH" ./output
     echo "FTP sync completed!"
