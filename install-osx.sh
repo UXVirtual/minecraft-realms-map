@@ -31,21 +31,21 @@ uuid()
 
 echo "Installing dependencies..."
 #install homebrew if missing
-#$ command -v brew >/dev/null 2>&1 || { /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" }
+$ command -v brew >/dev/null 2>&1 || { /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" }
 
-#install build tools
-#brew install boost libpng cmake libjpeg-turbo jq wget ncftp s3cmd
+install build tools
+brew install boost libpng cmake libjpeg-turbo jq wget ncftp s3cmd
 
 #install mapcrafter
-#git clone https://github.com/mapcrafter/mapcrafter.git bin/mapcrafter
-#cd bin/mapcrafter
-#cmake . -DJPEG_INCLUDE_DIR=/usr/local/opt/jpeg-turbo/include/ -DJPEG_LIBRARY=/usr/local/opt/jpeg-turbo/lib/libjpeg.dylib
-#make
-#cd ../../
+git clone https://github.com/mapcrafter/mapcrafter.git bin/mapcrafter
+cd bin/mapcrafter
+cmake . -DJPEG_INCLUDE_DIR=/usr/local/opt/jpeg-turbo/include/ -DJPEG_LIBRARY=/usr/local/opt/jpeg-turbo/lib/libjpeg.dylib
+make
+cd ../../
 
 #install minecraft textures
-#cp "$MINECRAFT_FOLDER/versions/1.9.4/1.9.4.jar" jar
-#python bin/mapcrafter/src/tools/mapcrafter_textures.py jar/1.9.4.jar bin/mapcrafter/src/data/textures
+cp "$MINECRAFT_FOLDER/versions/1.9.4/1.9.4.jar" jar
+python bin/mapcrafter/src/tools/mapcrafter_textures.py jar/1.9.4.jar bin/mapcrafter/src/data/textures
 
 #create render.conf file
 echo "Creating render.conf..."

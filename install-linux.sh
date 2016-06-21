@@ -29,6 +29,8 @@ uuid()
     echo
 }
 
+echo "Installing dependencies..."
+
 #install build tools
 sudo apt-get update
 sudo apt-get install -y python libpng-dev libjpeg-dev libboost-iostreams-dev \
@@ -56,7 +58,21 @@ else
 fi
 
 #create render.conf file
+echo "Creating render.conf..."
 cp render.default render.conf
+
+echo "Creating configuration.conf..."
+
+if [ -d "$MINECRAFT_FOLDER" ]; then
+    #get minecraft profile ID
+    LAUNCHER_PROFILES=$(cat "$MINECRAFT_FOLDER"/launcher_profiles.json)
+    MINECRAFT_PROFILE_ID=$(echo $LAUNCHER_PROFILES | jq -r '.selectedUser')
+    MINECRAFT_USERNAME=$(echo $LAUNCHER_PROFILES | jq -r ".authenticationDatabase.$MINECRAFT_PROFILE_ID.username")
+else
+    echo "Minecraft is not installed on this computer. Manually update MINECRAFT_PROFILE_ID and MINECRAFT_USERNAME in configuration.conf";
+fi
+
+MINECRAFT_CLIENT_ID=$(uuid)
 
 #create default configuration.conf file
 printf "FTP_SERVER=\nFTP_USERNAME=\nFTP_PASSWORD=\nFTP_PATH=/htdocs\nMINECRAFT_USERNAME=$MINECRAFT_USERNAME\nMINECRAFT_PASSWORD=\nMINECRAFT_PROFILE_ID=$MINECRAFT_PROFILE_ID\nMINECRAFT_CLIENT_ID=$MINECRAFT_CLIENT_ID\nMINECRAFT_VERSION=1.10\nMINECRAFT_WORLD_NUM=1\nHW_THREADS=4\nUPLOAD_TYPE=ftp\nS3_URL=s3://bucket-name/" > configuration.conf
