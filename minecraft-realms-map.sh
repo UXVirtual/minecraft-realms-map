@@ -4,10 +4,24 @@ AUTH_URL="https://authserver.mojang.com/authenticate"
 REFRESH_URL="https://authserver.mojang.com/refresh"
 WORLD_URL="https://mcoapi.minecraft.net/worlds"
 
+function getFormat {
+    SEPARATOR=$1
+    echo `date "+%Y-%m-%d_%H$SEPARATOR%M$SEPARATOR%S"`
+}
+
+function log {
+   DATE=$(getFormat ":")
+   echo "[$DATE] $1"
+}
+
+DATE=$(getFormat ".")
+exec > >(tee -i logs/map-generation-"$DATE".log)
+exec 2>&1
+
 #get config values
 source configuration.conf
 
-echo "Getting Minecraft authentication credentials..."
+log "Getting Minecraft authentication credentials..."
 
 #get auth server temp access token
 RESPONSE1=$(curl -s -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d "{
@@ -35,7 +49,7 @@ RESPONSE2=$(curl -s -X POST -H "Content-Type: application/json" -H "Cache-Contro
 LONG_ACCESS_TOKEN=$(echo $RESPONSE2 | jq -r '.accessToken')
 MINECRAFT_USER=$(echo $RESPONSE2 | jq -r '.selectedProfile.name')
 
-echo "Getting temporary download link for world backup..."
+log "Getting temporary download link for world backup..."
 
 #get Realms server ID
 RESPONSE3=$(curl -s -X GET -H "Content-Type: application/json" -H "Cookie: sid=token:$LONG_ACCESS_TOKEN:$MINECRAFT_PROFILE_ID;user=$MINECRAFT_USER;version=$MINECRAFT_VERSION" -H "Cache-Control: no-cache" -H "Pragma: no-cache" "$WORLD_URL")
@@ -52,42 +66,42 @@ DOWNLOAD_LINK=$(echo $RESPONSE4 | jq -r '.downloadLink')
 DATE=`date +%Y-%m-%d`
 FILE_PATH="backups/mcr_world_$DATE.tar.gz"
 
-echo "Downloading world backup. This may take several minutes..."
+log "Downloading world backup. This may take several minutes..."
 wget $DOWNLOAD_LINK -O "$FILE_PATH"
 
-echo "Extracting world backup..."
+log "Extracting world backup..."
 tar -xvf "$FILE_PATH" world
 
-echo "Removing backups older than 7 days..."
+log "Removing backups older than 7 days..."
 find ./backups/*.tar.gz -mtime +7 -type f -delete
 
-echo "Generating map..."
+log "Generating map..."
 
 DATE=`date +%Y-%m-%d:%H:%M:%S`
-echo "Started map generation at $DATE"
+log "Started map generation at $DATE"
 
 bin/mapcrafter/src/mapcrafter -c render.conf -j "$HW_THREADS"
 
 DATE=`date +%Y-%m-%d:%H:%M:%S`
-echo "Finished map generation at $DATE"
+log "Finished map generation at $DATE"
 
-echo "Uploading map to web server..."
+log "Uploading map to web server..."
 
 function s3_sync {
-    echo "Running S3 sync..."
+    log "Running S3 sync..."
     s3cmd sync --delete-removed ./output/* $S3_URL #$S3_URL must include trailing slash!
-    echo "S3 sync completed!"
+    log "S3 sync completed!"
 }
 
 #TODO: change to use configuration.conf to specify username and password info
 function ftp_sync {
-    echo "Running FTP sync..."
+    log "Running FTP sync..."
     ncftpput -R -u "$FTP_USERNAME" -p "$FTP_PASSWORD" "$FTP_SERVER" "$FTP_PATH" ./output
-    echo "FTP sync completed!"
+    log "FTP sync completed!"
 }
 
 DATE=`date +%Y-%m-%d:%H:%M:%S`
-echo "Started transfer at $DATE"
+log "Started transfer at $DATE"
 
 case "$UPLOAD_TYPE" in
         s3)
@@ -105,6 +119,9 @@ case "$UPLOAD_TYPE" in
 esac
 
 DATE=`date +%Y-%m-%d:%H:%M:%S`
-echo "Finished transfer at $DATE"
+log "Finished transfer at $DATE"
 
-echo "DONE!"
+log "Removing logs older than 7 days..."
+find ./logs/*.log -mtime +7 -type f -delete
+
+log "DONE!"
