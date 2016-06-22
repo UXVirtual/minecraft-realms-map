@@ -2,7 +2,7 @@
 
 MINECRAFT_FOLDER=~/Library/Application\ Support/minecraft
 
-uuid()
+function uuid
 {
     local N B C='89ab'
 
@@ -34,7 +34,7 @@ echo "Installing dependencies..."
 $ command -v brew >/dev/null 2>&1 || { /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" }
 
 install build tools
-brew install boost libpng cmake libjpeg-turbo jq wget ncftp s3cmd
+brew install boost libpng cmake libjpeg-turbo jq wget ncftp s3cmd imagemagick
 
 #install mapcrafter
 git clone https://github.com/mapcrafter/mapcrafter.git bin/mapcrafter
