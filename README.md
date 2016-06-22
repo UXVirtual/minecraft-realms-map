@@ -13,13 +13,11 @@ Note: The installer only supports Debian/Ubuntu and OSX at this time.
 
 *   Nightly backups with 7 days retention
 *   Automatic map generation
+*   Logging map generation / upload to disk
 
 ## TODO
 
-*   Add logging backup / map generation to disk
 *   Add encryption to Minecraft username and password stored on disk.
-*   Upload to S3
-*   Test Linux installer on RaspberryPi
 
 ## Compatibility
 
