@@ -66,7 +66,7 @@ DOWNLOAD_LINK=$(echo $RESPONSE4 | jq -r '.downloadLink')
 DATE=`date +%Y-%m-%d`
 FILE_PATH="backups/mcr_world_$DATE.tar.gz"
 
-log "Downloading world backup. This may take several minutes..."
+log "Downloading world backup from $DOWNLOAD_LINK. This may take several minutes..."
 wget $DOWNLOAD_LINK -O "$FILE_PATH"
 
 log "Extracting world backup..."
@@ -89,7 +89,7 @@ log "Uploading map to web server..."
 
 function s3_sync {
     log "Running S3 sync..."
-    s3cmd sync --delete-removed ./output/* $S3_URL #$S3_URL must include trailing slash!
+    aws s3 sync --delete ./output/* $S3_URL #$S3_URL must include trailing slash!
     log "S3 sync completed!"
 }
 

@@ -37,6 +37,9 @@ sudo apt-get install -y python libpng-dev libjpeg-dev libboost-iostreams-dev \
 libboost-system-dev libboost-filesystem-dev libboost-program-options-dev \
 build-essential cmake jq wget ncftp s3cmd imagemagick
 
+#install aws CLI
+sudo pip install awscli
+
 #install mapcrafter
 git clone https://github.com/mapcrafter/mapcrafter.git bin/mapcrafter
 cd bin/mapcrafter

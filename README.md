@@ -80,12 +80,21 @@ specific rendering issues until the []Mapcrafter](https://mapcrafter.org/index) 
 10) If you're using an AWS S3 bucket to upload the map, run the below to configure your connection to S3:
 
     ```
-    s3cmd --configure
+    mkdir ~/.aws
+    sudo nano ~/.aws/credentials
     ```
 
-    You will be asked for the two keys - copy and paste them from your confirmation email or from your Amazon account
-    page. Be careful when copying them! They are case sensitive and must be entered accurately or you'll keep getting
-    errors about invalid signatures or similar.
+    Add the following to the `~/.aws/credentials` file:
+
+    ```
+    [default]
+    aws_access_key_id = AWS_IAM_USER_KEY
+    aws_secret_access_key = AWS_IAM_USER_SECRET
+    ```
+
+    You need to set two keys `AWS_IAM_USER_KEY` and `AWS_IAM_USER_SECRET` - copy and paste them from your confirmation
+    email or from your Amazon account page. Be careful when copying them! They are case sensitive and must be entered
+    accurately or you'll keep getting errors about invalid signatures or similar when attempting to sync to s3.
 
 ## Disclaimer
 

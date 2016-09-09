@@ -36,6 +36,9 @@ $ command -v brew >/dev/null 2>&1 || { /usr/bin/ruby -e "$(curl -fsSL https://ra
 install build tools
 brew install boost libpng cmake libjpeg-turbo jq wget ncftp s3cmd imagemagick
 
+#install aws CLI
+sudo pip install awscli
+
 #install mapcrafter
 git clone https://github.com/mapcrafter/mapcrafter.git bin/mapcrafter
 cd bin/mapcrafter
