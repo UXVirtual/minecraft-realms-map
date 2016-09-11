@@ -72,8 +72,8 @@ wget $DOWNLOAD_LINK -O "$FILE_PATH"
 log "Extracting world backup..."
 tar -xvf "$FILE_PATH" world
 
-log "Removing backups older than 7 days..."
-find ./backups/*.tar.gz -mtime +7 -type f -delete
+log "Removing backups older than 2 days..."
+find ./backups/*.tar.gz -mtime +2 -type f -delete
 
 log "Generating map..."
 
