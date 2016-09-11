@@ -89,7 +89,7 @@ log "Uploading map to web server..."
 
 function s3_sync {
     log "Running S3 sync..."
-    aws s3 sync --delete ./output/* $S3_URL #$S3_URL must include trailing slash!
+    aws s3 sync --delete ./output $S3_URL #$S3_URL must include trailing slash!
     log "S3 sync completed!"
 }
 
