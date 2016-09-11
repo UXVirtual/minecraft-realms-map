@@ -2,6 +2,10 @@ output_dir = output
 
 [world:myworld]
 input_dir = world
+default_zoom = 8
+crop_center_x = 0
+crop_center_z = 0
+crop_radius = 20000
 
 [map:map_myworld]
 name = "My World"
