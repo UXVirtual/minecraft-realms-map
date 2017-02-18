@@ -43,7 +43,7 @@ function downloadWorld {
         \"password\":\"$MINECRAFT_PASSWORD\"
     }" "$AUTH_URL")
 
-    //log "$RESPONSE1"
+    #log "$RESPONSE1"
 
     #parse and store temp access token
     TEMP_ACCESS_TOKEN=$(echo $RESPONSE1 | jq -r '.accessToken')
@@ -58,7 +58,7 @@ function downloadWorld {
         }
     }" "$REFRESH_URL")
 
-    //log "$RESPONSE2"
+    #log "$RESPONSE2"
 
     #parse and store long term access token
     LONG_ACCESS_TOKEN=$(echo $RESPONSE2 | jq -r '.accessToken')
@@ -69,7 +69,7 @@ function downloadWorld {
     #get Realms server ID
     RESPONSE3=$(curl -s -X GET -H "Content-Type: application/json" -H "Cookie: sid=token:$LONG_ACCESS_TOKEN:$MINECRAFT_PROFILE_ID;user=$MINECRAFT_USER;version=$MINECRAFT_VERSION" -H "Cache-Control: no-cache" -H "Pragma: no-cache" "$WORLD_URL")
 
-    //log "$RESPONSE3"
+    #log "$RESPONSE3"
 
     #parse and store server ID
     SERVER_ID=$(echo $RESPONSE3 | jq -r '.servers[0].id')
@@ -80,7 +80,7 @@ function downloadWorld {
     #get world backup URL
     RESPONSE4=$(curl -s -X GET -H "Content-Type: application/json" -H "Cookie: sid=token:$LONG_ACCESS_TOKEN:$MINECRAFT_PROFILE_ID;user=$MINECRAFT_USER;version=$MINECRAFT_VERSION" -H "Cache-Control: no-cache" -H "Pragma: no-cache" "$WORLD_URL/$SERVER_ID/slot/$MINECRAFT_WORLD_NUM/download")
 
-    //log "$RESPONSE4"
+    #log "$RESPONSE4"
 
     if [ "$RESPONSE4" == 'Retry again later' ]
         then
