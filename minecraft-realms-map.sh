@@ -102,7 +102,7 @@ function downloadWorld {
     log "Downloading world backup from $DOWNLOAD_LINK. This may take several minutes..."
     wget "$DOWNLOAD_LINK" -O "$FILE_PATH"
 
-    gunzip -c file.tar.gz | tar t > /dev/null;
+    gunzip -c "$FILE_PATH" | tar t > /dev/null;
 
     if [ $? -ne 0 ]
         then
