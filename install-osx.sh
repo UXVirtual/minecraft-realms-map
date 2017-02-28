@@ -33,7 +33,7 @@ echo "Installing dependencies..."
 #install homebrew if missing
 $ command -v brew >/dev/null 2>&1 || { /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" }
 
-install build tools
+#install build tools
 brew install boost libpng cmake libjpeg-turbo jq wget ncftp s3cmd imagemagick
 
 #install aws CLI
