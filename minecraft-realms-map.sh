@@ -5,7 +5,7 @@ export TOP_PID=$$
 
 AUTH_URL="https://authserver.mojang.com/authenticate"
 REFRESH_URL="https://authserver.mojang.com/refresh"
-WORLD_URL="https://mcoapi.minecraft.net/worlds"
+WORLD_URL="https://pc.realms.minecraft.net/worlds"
 
 DATE=`date +%Y-%m-%d`
 FILE_PATH="backups/mcr_world_$DATE.tar.gz"
